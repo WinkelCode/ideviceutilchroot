@@ -1,0 +1,14 @@
+git
+libtool
+automake
+autoconf
+gcc
+libc-dev
+pkgconfig
+g++
+make
+readline-dev
+libusb-dev
+openssl-dev
+libzip-dev
+curl-dev
