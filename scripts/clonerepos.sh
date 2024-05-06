@@ -18,6 +18,6 @@ mkdir -p "$project_dir/buildlog"
 for project in $projects; do
 	repourl="$baseurl/$project"
 	echo "-> Cloning $repourl" >>"$logfile"
-	git clone "$repourl" 2>&1 | tee -a "$logfile"
+	git clone --depth=1 "$repourl" 2>&1 | tee -a "$logfile"
 	echo "-> Done" >>"$logfile"
 done
