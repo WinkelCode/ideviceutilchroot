@@ -23,7 +23,7 @@ for project in $projects; do
 	./autogen.sh --disable-static 2>&1 | tee -a "$logfile"
 	echo "-> Done configuring" >>"$logfile"
 	echo "-> Building and installing $project" >>"$logfile"
-	make -j"$nproc" install 2>&1 | tee -a "$logfile"
+	make -j${nproc} install 2>&1 | tee -a "$logfile"
 	echo "-> Done" >>"$logfile"
 	cd ..
 done
