@@ -25,7 +25,7 @@ if [ "$*" = "--clean" ]; then
 	echo "Initiating cleanup of mounts in '$chroot_dir'."
 	echo "Note: Ignore 'No such file or directory' and 'Invalid argument' errors."
 	for mountpoint in sys/firmware/efi/efivars etc/resolv.conf $unmountpoints; do
-		umount "$chroot_dir/$mountpoint" 2>/dev/null && echo "Unmounted $chroot_dir/$mountpoint" || true
+		umount "$chroot_dir/$mountpoint" >/dev/null && echo "Unmounted $chroot_dir/$mountpoint" || true
 	done
 	if [ -f "$chroot_dir/etc/resolv.conf" ] && [ "$(cat "$chroot_dir/etc/resolv.conf")" = "$resolv_conf_dummy_id" ]; then
 		echo "Cleaning temporary resolv.conf in chroot."
@@ -68,7 +68,7 @@ for mountpoint in $mountpoints; do
 		dev/shm)
 			mount "/$mountpoint" "$chroot_dir/dev/shm" -t tmpfs -o mode=1777,nosuid,nodev ;;
 		run)
-			mount "/$mountpoint" "$chroot_dir/run"  --bind --make-private ;;
+			mount "/$mountpoint" "$chroot_dir/run" --bind --make-private ;;
 		tmp)
 			mount "/$mountpoint" "$chroot_dir/tmp" -t tmpfs -o mode=1777,strictatime,nodev,nosuid ;;
 		*)

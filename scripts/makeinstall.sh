@@ -2,7 +2,6 @@
 set -e
 set -o pipefail
 project_dir="$(dirname "$(realpath "$0")")"
-rundate="$(date -u +%Y-%m-%d.%H%M%SZ)"
 
 nproc=$(nproc)
 projectsfile="$project_dir/projects.txt" # The order of the projects within this file is important to satisfy dependencies
@@ -13,10 +12,13 @@ else
 	projects=$(cat "$projectsfile")
 fi
 
+mkdir -p "$project_dir/buildlog"
 for project in $projects; do
-	logfile="$project_dir/buildlog/${rundate}_${project}.log"
-	mkdir -p "$project_dir/buildlog"
+	rundate="$(date -u +%Y-%m-%d.%H%M%SZ)"
+	logfile="$project_dir/buildlog/${rundate}_configure_${project}.log"
 	cd "$project"
+	rundate="$(date -u +%Y-%m-%d.%H%M%SZ)"
+	logfile="$project_dir/buildlog/${rundate}_makeinstall_${project}.log"
 	echo "-> Configuring $project" >>"$logfile"
 	./autogen.sh --disable-static 2>&1 | tee -a "$logfile"
 	echo "-> Done configuring" >>"$logfile"
